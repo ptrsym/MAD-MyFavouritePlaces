@@ -25,9 +25,8 @@ struct DetailView: View {
                 if isEditMode?.wrappedValue == .active{
                     List{
                         TextField("Enter place a name:", text:$name)
-                        .padding(.top, 10)
-                        .padding(.leading, -20)
-                        .listRowBackground(Color.clear)
+                            .padding(.leading, -20)
+                            .listRowBackground(Color.clear)
                         TextField("Enter an image url: ", text: $url)
                             .padding(.leading, -20)
                             .listRowBackground(Color.clear)
@@ -52,8 +51,12 @@ struct DetailView: View {
                         .padding(.leading, -20)
                     }
                 } else {
-//                    Image(image)
-
+                    GeometryReader{ geometry in
+                        image
+                            .scaledToFit()
+                            .padding(20)
+                            .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
+                    }.padding(.bottom, -20)
                     List{
                         Text("Location Details:")
                             .padding(.leading, -20)
@@ -62,40 +65,48 @@ struct DetailView: View {
                         ForEach(place.details?.allObjects as? [Detail] ?? []) { detail in
                             Text(detail.detail ?? "")
                         }.onDelete(perform: delDetail)
-                
+                        
                         Text("Longitude: \(place.longitude)")
                             .padding(.leading, -20)
                             .padding(.top, 10)
                             .listRowBackground(Color.clear)
-                            Text("Latitude: \(place.latitude)")
+                        Text("Latitude: \(place.latitude)")
                             .padding(.leading, -20)
                             .listRowBackground(Color.clear)
-                    }
+                    }.padding(.top, -20)
                 }
             }
         }
-            .navigationBarTitle("\(place.strName)")
-            .navigationBarItems(trailing: HStack{
-                Button(action: {
-                    place.strName = name
-                    place.strUrl = url
-                    place.strLongitude = longitude
-                    place.strLatitude = latitude
+        .navigationBarTitle("\(place.strName)").padding(.bottom, -40)
+        .navigationBarItems(trailing: HStack{
+            Button(action: {
+                place.strName = name
+                place.strUrl = url
+                place.strLongitude = longitude
+                place.strLatitude = latitude
+                if !newDetail.isEmpty {
                     place.addDetail(newDetail)
-                    newDetail = ""
-                    saveData()
-                    isEditMode?.wrappedValue = .inactive
-                }) {
-                    Text("Save")
                 }
-                EditButton()
-            })
-            .onAppear {
-                name = place.strName
-                url = place.strUrl
-                longitude = place.strLongitude
-                latitude = place.strLatitude
+                newDetail = ""
+                saveData()
+                Task{
+                    await image = place.getImage()
+                }
+                isEditMode?.wrappedValue = .inactive
+            }) {
+                Text("Save")
             }
+            EditButton()
+        })
+        .onAppear {
+            name = place.strName
+            url = place.strUrl
+            longitude = place.strLongitude
+            latitude = place.strLatitude
+        }
+        .task {
+            await image = place.getImage()
+        }
     }
 }
 

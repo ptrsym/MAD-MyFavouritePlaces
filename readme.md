@@ -29,6 +29,10 @@ added some styling to detailview layout
 encountered issues with content view name updating realised I needed to add an ObservedObject wrapper to my PlaceRowView to fix the problem
 tried to build an .onDelete function for the lists in the detail view using a similar method to the content view.
 found difficulties accessing the relationship set and got a fault error with initial function took a different approach to convert the NSSet to a swift array
+added image functions to viewmodel
+added thumbnail and image to views
+working project
+
 
 ### Video 1
 

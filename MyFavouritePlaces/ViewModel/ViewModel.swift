@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-var defaultImage = Image(systemName: "photo")
+var defaultImage = Image(systemName: "photo").resizable()
 var downloadImage: [URL: Image] = [:]
 
 func saveData() {

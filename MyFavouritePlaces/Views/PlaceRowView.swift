@@ -13,11 +13,15 @@ struct PlaceRowView: View {
     
     @Environment(\.managedObjectContext) var context
     @ObservedObject var place: Place
+    @State var image = defaultImage
     
     var body: some View {
         HStack{
-            //Configure image thumbnail
+            image.frame(width: 30, height: 30).clipShape(Rectangle())
+                .padding(.trailing, 10)
             Text(place.strName)
+        }.task {
+            await image = place.getImage()
         }
         
     }
