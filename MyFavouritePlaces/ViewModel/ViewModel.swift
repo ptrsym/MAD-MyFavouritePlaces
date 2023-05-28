@@ -9,8 +9,8 @@ import Foundation
 import CoreData
 import SwiftUI
 
-fileprivate var defaultImage = Image(systemName: "photo")
-fileprivate var downloadImage: [URL: Image] = [:]
+var defaultImage = Image(systemName: "photo")
+var downloadImage: [URL: Image] = [:]
 
 func saveData() {
     let context = PersistenceHandler.shared.container.viewContext

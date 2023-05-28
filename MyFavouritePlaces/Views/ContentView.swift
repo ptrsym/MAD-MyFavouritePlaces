@@ -32,7 +32,7 @@ struct ContentView: View {
             .navigationBarItems(
                 leading: Button(action:{
                     addPlace()
-                }) {Text("Add new place")}
+                }) {Image(systemName:"plus")}
                 ,
                 trailing: EditButton())
         }
