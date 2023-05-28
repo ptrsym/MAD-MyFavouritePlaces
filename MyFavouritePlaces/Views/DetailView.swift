@@ -58,11 +58,9 @@ struct DetailView: View {
                             ForEach(place.details?.allObjects as? [Detail] ?? []) { detail in
                                 Text(detail.detail ?? "")
                             }
+                            .onDelete(perform:delDetail)
                         }
-                        
-                        //                    .onDelete(perform:delDetail)
-                        
-
+                       
                     Spacer()
                 } else {
                     Text("Longitude: \(place.longitude)")
@@ -78,10 +76,9 @@ struct DetailView: View {
                     List{
                         ForEach(place.details?.allObjects as? [Detail] ?? []) { detail in
                             Text(detail.detail ?? "")
-                        }
+                        }.onDelete(perform: delDetail)
 
                     }
-                    //                    .onDelete (perform: delDetail)
 
 
 

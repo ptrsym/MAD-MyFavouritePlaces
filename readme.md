@@ -24,7 +24,9 @@ project had broken coredata which wasnt being recognised despite everything bein
 project seems broken need to completely rebuild commit history likely to change due to new repository
 
 28/05/23
-
+got project working fixing some layout mistakes
+added some styling to detailview layout
+encountered issues with content view name updating realised I needed to add an ObservedObject wrapper to my PlaceRowView to fix the problem
 
 
 ### Video 1

@@ -16,7 +16,6 @@ func saveData() {
     let context = PersistenceHandler.shared.container.viewContext
     do {
         try context.save()
-        context.refreshAllObjects()
     } catch {
         fatalError("Error occured while saving: \(error)")
     }
@@ -122,12 +121,17 @@ extension ContentView {
 extension DetailView {
     func delDetail(index: IndexSet) {
         withAnimation {
-            if let details = place.details?.allObjects as? [Detail]{
-                index.map{details[$0]}.forEach { detail in
+            guard let detailsArray = Array(place.details ?? []) as? [Detail] else {
+                return
+            }
+            index.forEach {i in
+                if i < detailsArray.count {
+                    let detail = detailsArray[i]
                     context.delete(detail)
                 }
             }
+            saveData()
         }
-        saveData()
     }
 }
+
