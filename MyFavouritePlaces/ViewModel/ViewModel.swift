@@ -16,18 +16,10 @@ func saveData() {
     let context = PersistenceHandler.shared.container.viewContext
     do {
         try context.save()
+        context.refreshAllObjects()
     } catch {
-        let error = error as NSError
         fatalError("Error occured while saving: \(error)")
     }
-}
-
-func addPlace() {
-    let context = PersistenceHandler.shared.container.viewContext
-    let newPlace = Place(context: context)
-    newPlace.strName = "New Place"
-    saveData()
-
 }
 
 extension Place {
@@ -43,7 +35,7 @@ extension Place {
     
     var strName:String {
         get {
-            self.name ?? ""
+            self.name ?? "no name"
         }
         set {
             self.name = newValue
@@ -81,13 +73,10 @@ extension Place {
             self.imgurl?.absoluteString ?? ""
         }
         set {
-            if let url = URL(string: newValue) {
-                self.imgurl = url
-            } else {
-                print("Invalid URL link \(newValue)")
+            guard let url = URL(string: newValue) else {return}
+            self.imgurl = url
             }
         }
-    }
 }
     
 extension Detail {
@@ -110,6 +99,22 @@ extension ContentView {
             saveData()
         }
     }
+    func addPlace() {
+        let newPlace = Place(context: context)
+        newPlace.strName = "New Place"
+        saveData()
+
+    }
+    
+//    func fetchData() {
+//        let fetchRequest: NSFetchRequest<Place> = Place.fetchRequest()
+//        do {
+//            let fetchedPlaces = try context.fetch(fetchRequest)
+//        } catch {
+//            print("Failed to fetch data: \(error)")
+//        }
+//    }
+
     
 
 }

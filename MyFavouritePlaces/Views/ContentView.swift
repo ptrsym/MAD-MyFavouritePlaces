@@ -11,12 +11,12 @@ import CoreData
 struct ContentView: View {
     
     @Environment(\.managedObjectContext) var context
-    @FetchRequest(entity: Place.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], animation: .default)
+    @FetchRequest(entity: Place.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)])
     var favouritePlaces: FetchedResults<Place>
     
     var body: some View {
         NavigationView{
-            VStack {
+            VStack{
                 List{
                     ForEach(favouritePlaces) { place in
                         NavigationLink(destination: DetailView(place: place)){
@@ -24,13 +24,15 @@ struct ContentView: View {
                         }
                     }.onDelete(perform: delPlace)
                 }.padding()
-                
+//                    .onAppear{
+//                        fetchData()
+//                    }
             }
             .navigationTitle("My Favourite Places")
             .navigationBarItems(
                 leading: Button(action:{
                     addPlace()
-                }) {Text("Add New Place")}
+                }) {Text("Add new place")}
                 ,
                 trailing: EditButton())
         }

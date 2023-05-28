@@ -96,7 +96,6 @@ struct DetailView: View {
                     place.strLongitude = longitude
                     place.strLatitude = latitude
                     saveData()
-                    
                     isEditMode?.wrappedValue = .inactive
                 }) {
                     Text("Save")

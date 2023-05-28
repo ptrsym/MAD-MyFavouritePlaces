@@ -12,7 +12,7 @@ import CoreData
 struct PlaceRowView: View {
     
     @Environment(\.managedObjectContext) var context
-    var place: Place
+    @ObservedObject var place: Place
     
     var body: some View {
         HStack{
