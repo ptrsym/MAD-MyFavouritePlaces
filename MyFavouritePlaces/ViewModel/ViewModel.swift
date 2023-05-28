@@ -31,6 +31,25 @@ extension Place {
         saveData()
     }
     
+    // attempt to retrieve an image from a dictionary of cached images if it exists, if not download the image located
+    // at the stored url attribute and add it to the downloadImage dictioanry. if no URl is stored or an error occurs
+    // return a default image
+    
+    func getImage() async -> Image {
+        guard let url = self.imgurl else {return defaultImage}
+        if let image = downloadImage[url] {return image}
+            do{
+                let (data, _) = try await URLSession.shared.data(from: url)
+                guard let uiimg = UIImage(data: data) else {return defaultImage}
+                let image = Image(uiImage: uiimg).resizable()
+                downloadImage[url]=image
+                return image
+            }catch {
+                print("error in downloading image \(error)")
+            }
+        
+        return defaultImage
+    }
     
     var strName:String {
         get {

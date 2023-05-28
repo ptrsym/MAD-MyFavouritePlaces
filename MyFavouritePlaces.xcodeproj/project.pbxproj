@@ -111,6 +111,7 @@
 				D0BFABFA2A2252DF00D4D47B /* DataModel */,
 				D0BFABFC2A22532700D4D47B /* ViewModel */,
 				D0BFABFB2A22531A00D4D47B /* Views */,
+				D0BFABD02A2252A600D4D47B /* MyFavouritePlacesApp.swift */,
 				D0BFABD42A2252A700D4D47B /* Assets.xcassets */,
 			);
 			path = MyFavouritePlaces;
@@ -156,7 +157,6 @@
 				D0BFABD22A2252A600D4D47B /* ContentView.swift */,
 				D0BFAC092A229BE800D4D47B /* DetailView.swift */,
 				D0BFAC0B2A229BFB00D4D47B /* PlaceRowView.swift */,
-				D0BFABD02A2252A600D4D47B /* MyFavouritePlacesApp.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
