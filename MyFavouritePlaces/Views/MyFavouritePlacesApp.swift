@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct MyFavouritePlacesApp: App {
+    
+    let persistenceHandler = PersistenceHandler.shared
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environment(\.managedObjectContext, persistenceHandler.container.viewContext)
+                .environment(\.colorScheme, .dark)
         }
     }
 }
