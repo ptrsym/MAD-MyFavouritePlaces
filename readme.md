@@ -34,9 +34,14 @@ added thumbnail and image to views
 working project
 
 
-### Video 1
+### Video 1 https://youtu.be/yd4U63tEbmY
 
 ## Milestone 2
+
+29/05/23
+
+
+
 
 ### Video 2
 

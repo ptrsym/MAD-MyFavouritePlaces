@@ -4,26 +4,29 @@
 //
 //  Created by Peter on 28/5/2023.
 //
-
 import XCTest
 @testable import MyFavouritePlaces
 
 final class MyFavouritePlacesTests: XCTestCase {
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        // Put setup code here. This method is called before the invocation of each test method in the class
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func teststrLongitude(){
+//      let testPlace = TestClass()
+        let context = PersistenceHandler.shared.container.viewContext
+        let testPlace = Place(context: context)
+        testPlace.strLatitude = "45"
+        XCTAssert(testPlace.strLatitude == "45.00000")
+        testPlace.strLatitude = "91"
+        XCTAssert(testPlace.strLatitude == "45.00000")
+        testPlace.strLatitude = "-20.555556"
+        XCTAssert(testPlace.strLatitude == "-20.55556")
     }
 
     func testPerformanceExample() throws {

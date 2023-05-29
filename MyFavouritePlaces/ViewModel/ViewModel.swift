@@ -9,6 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
+
 var defaultImage = Image(systemName: "photo").resizable()
 var downloadImage: [URL: Image] = [:]
 
@@ -22,6 +23,7 @@ func saveData() {
 }
 
 extension Place {
+    
     
     func addDetail(_ description:String) {
         let context = PersistenceHandler.shared.container.viewContext
@@ -62,7 +64,7 @@ extension Place {
         
     var strLongitude: String {
         get {
-            String(self.longitude)
+            String(format: "%.5f", self.longitude)
         }
         set {
             if let doubleValue = Double(newValue), doubleValue >= -180.0, doubleValue <= 180.0 {
@@ -75,7 +77,7 @@ extension Place {
     
     var strLatitude:String{
         get{
-            String(self.latitude)
+            String(format: "%.5f", self.latitude)
         }
         set {
             if let doubleValue = Double(newValue), doubleValue >= -90.0, doubleValue <= 90.0 {
@@ -133,10 +135,8 @@ extension ContentView {
 //        }
 //    }
 
-    
 
 }
-
 extension DetailView {
     func delDetail(index: IndexSet) {
         withAnimation {
@@ -153,4 +153,6 @@ extension DetailView {
         }
     }
 }
+
+
 
