@@ -58,7 +58,7 @@ struct MapView: View {
                         .padding(.top, 10)
                         .onTapGesture {
                             if isEditMode?.wrappedValue == .active{
-                                //      checkLocation()
+                                checkLocation()
                             }
                         }
                     Spacer()
