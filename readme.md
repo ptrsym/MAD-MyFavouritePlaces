@@ -39,8 +39,10 @@ working project
 ## Milestone 2
 
 29/05/23
-
-
+experimenting with ways to generate the region data for generating a map, went through place extension -> getter
+for computed mapcoords to making a separate class mapviewmodel to handle the map generation and interaction
+researched how to implement a map thumbnail image without generating an interaction map. resulted in making a class
+to handle the thumbnail generator which uses MKMap snapshotter
 
 
 ### Video 2

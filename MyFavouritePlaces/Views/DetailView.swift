@@ -58,6 +58,9 @@ struct DetailView: View {
                             .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
                     }.padding(.bottom, -20)
                     List{
+                        NavigationLink(destination: MapView(mapModel: MapViewModel(place: place))){
+                            MapRowView(place: place)
+                    }
                         Text("Location Details:")
                             .padding(.leading, -20)
                             .padding(.bottom, 10)

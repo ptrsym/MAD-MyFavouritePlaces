@@ -14,6 +14,10 @@
 		D082039C2A248B1C00425A6D /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BFAC092A229BE800D4D47B /* DetailView.swift */; };
 		D082039D2A248B1E00425A6D /* PlaceRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BFAC0B2A229BFB00D4D47B /* PlaceRowView.swift */; };
 		D082039E2A248B2600425A6D /* MyFavouritePlacesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BFABD02A2252A600D4D47B /* MyFavouritePlacesApp.swift */; };
+		D08203A02A249B7B00425A6D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D082039F2A249B7B00425A6D /* MapView.swift */; };
+		D08203A12A249B7B00425A6D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D082039F2A249B7B00425A6D /* MapView.swift */; };
+		D08203A32A249C1200425A6D /* MapRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08203A22A249C1200425A6D /* MapRowView.swift */; };
+		D08203A42A249C1200425A6D /* MapRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08203A22A249C1200425A6D /* MapRowView.swift */; };
 		D0BFABD12A2252A600D4D47B /* MyFavouritePlacesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BFABD02A2252A600D4D47B /* MyFavouritePlacesApp.swift */; };
 		D0BFABD32A2252A600D4D47B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BFABD22A2252A600D4D47B /* ContentView.swift */; };
 		D0BFABD52A2252A700D4D47B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0BFABD42A2252A700D4D47B /* Assets.xcassets */; };
@@ -47,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D082039F2A249B7B00425A6D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		D08203A22A249C1200425A6D /* MapRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRowView.swift; sourceTree = "<group>"; };
 		D0BFABCD2A2252A600D4D47B /* MyFavouritePlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyFavouritePlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0BFABD02A2252A600D4D47B /* MyFavouritePlacesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavouritePlacesApp.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		D0BFABD22A2252A600D4D47B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -163,6 +169,8 @@
 			children = (
 				D0BFABD22A2252A600D4D47B /* ContentView.swift */,
 				D0BFAC092A229BE800D4D47B /* DetailView.swift */,
+				D08203A22A249C1200425A6D /* MapRowView.swift */,
+				D082039F2A249B7B00425A6D /* MapView.swift */,
 				D0BFAC0B2A229BFB00D4D47B /* PlaceRowView.swift */,
 			);
 			path = Views;
@@ -308,7 +316,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0BFAC032A22554600D4D47B /* ViewModel.swift in Sources */,
+				D08203A02A249B7B00425A6D /* MapView.swift in Sources */,
 				D0BFAC0A2A229BE800D4D47B /* DetailView.swift in Sources */,
+				D08203A32A249C1200425A6D /* MapRowView.swift in Sources */,
 				D0BFABFF2A22537300D4D47B /* Places.xcdatamodeld in Sources */,
 				D0BFAC0C2A229BFB00D4D47B /* PlaceRowView.swift in Sources */,
 				D0BFAC012A2254C600D4D47B /* Persistence.swift in Sources */,
@@ -328,6 +338,8 @@
 				D082039D2A248B1E00425A6D /* PlaceRowView.swift in Sources */,
 				D082039E2A248B2600425A6D /* MyFavouritePlacesApp.swift in Sources */,
 				D08203992A248B0F00425A6D /* Places.xcdatamodeld in Sources */,
+				D08203A12A249B7B00425A6D /* MapView.swift in Sources */,
+				D08203A42A249C1200425A6D /* MapRowView.swift in Sources */,
 				D082039A2A248B1200425A6D /* Persistence.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

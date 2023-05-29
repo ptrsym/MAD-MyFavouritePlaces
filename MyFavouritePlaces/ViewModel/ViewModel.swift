@@ -24,16 +24,50 @@ func saveData() {
     }
 }
 
+class MapViewModel: ObservableObject {
+    @Published var place: Place
+    
+    init(place: Place){
+        self.place = place
+    }
+    
+//    var strDelta:String {
+//        get {
+//            String(self.delta)
+//        }
+//        set {
+//            if let doubleValue = Double(newValue){
+//                self.delta = doubleValue
+//            } else {
+//                print("Invalid delta value \(newValue)")
+//            }
+//        }
+//    }
+    
+    func updatePlace() {
+        saveData()
+    }
+    
+}
+
 extension Place {
+    
+    func generateThumbnailImage() async -> UIImage?{
+        let options = MKMapSnapshotter.Options()
+        options.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude:
+                         self.latitude, longitude: self.longitude), span: MKCoordinateSpan(
+                         latitudeDelta: 0.1, longitudeDelta: 0.1))
         
-    var region : MKCoordinateRegion{
-        get{
-            MKCoordinateRegion(center: CLLocationCoordinate2D(
-            latitude: self.latitude, longitude: self.longitude), span:
-            MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+        do{
+            let snapshot = try await MKMapSnapshotter(options: options).start()
+            return snapshot.image
+        } catch {
+            print("Error creating map snapshot: \(error)")
+            return nil
         }
     }
     
+        
     func addDetail(_ description:String) {
         let context = PersistenceHandler.shared.container.viewContext
         let newDetail = Detail(context: context)
@@ -70,22 +104,7 @@ extension Place {
             self.name = newValue
         }
     }
-    
-    var strDelta:String {
-        get {
-            String(format: "%.5f", self.delta)
-        }
-        set {
-            if let doubleValue = Double(newValue){
-                self.delta = doubleValue
-            } else {
-                print("Invalid delta value \(newValue)")
-            }
-        }
-    }
-    
-    
-        
+            
     var strLongitude: String {
         get {
             String(format: "%.5f", self.longitude)
