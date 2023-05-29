@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 import MapKit
-import Foundation
+import CoreLocation
 
 
 var defaultImage = Image(systemName: "photo").resizable()
@@ -25,16 +25,76 @@ func saveData() {
 }
 
 class MapViewModel: ObservableObject {
-    @Published var place: Place
-    
-    init(place: Place){
+    @Published var place: Place?
+    @Published var name: String
+    @Published var latitude: Double
+    @Published var longitude: Double
+    @Published var delta: Double
+    @Published var region: MKCoordinateRegion
+    init(place: Place? = nil){
         self.place = place
+        self.name = ""
+        self.latitude = 0.0
+        self.longitude = 0.0
+        self.delta = 100
+        self.region = MKCoordinateRegion(center:
+                                            CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), span:
+                                            MKCoordinateSpan(latitudeDelta: 100, longitudeDelta: 100))
     }
-        
+    
+    var regionLat:String {
+        get{
+            String(format: "%.5f", self.region.center.latitude)
+        }
+        set {
+            if let doubleValue = Double(newValue), doubleValue >= -90.0, doubleValue <= 90.0 {
+                self.latitude = doubleValue
+            } else {
+                print("Invalid longitude value \(newValue)")
+            }
+        }
+    }
+    
+    var regionLong:String {
+        get{
+            String(format: "%.5f", self.region.center.longitude)
+        }
+        set {
+            if let doubleValue = Double(newValue), doubleValue >= -180.0, doubleValue <= 180.0 {
+                self.longitude = doubleValue
+            } else {
+                print("Invalid longitude value \(newValue)")
+            }
+        }
+    }
+    
+    
+    
+    func updateModel(_ place: Place){
+        self.place = place
+        self.name = place.name ?? "no name"
+        self.latitude = place.latitude
+        self.longitude = place.longitude
+        self.delta = place.delta
+        self.region = MKCoordinateRegion(center:
+                      CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude), span:
+                      MKCoordinateSpan(latitudeDelta: place.delta, longitudeDelta: place.delta))
+    }
+    
     func updatePlace() {
+        self.place?.longitude = self.longitude
+        self.place?.latitude = self.latitude
+        self.place?.name = self.name
+        self.place?.delta = self.delta
         saveData()
     }
     
+    func checkAddress(){
+        
+    }
+    
+    func checkLocation(){
+    }
 }
 
 extension Place {

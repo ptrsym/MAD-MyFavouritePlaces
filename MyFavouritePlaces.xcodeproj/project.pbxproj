@@ -18,6 +18,7 @@
 		D08203A12A249B7B00425A6D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D082039F2A249B7B00425A6D /* MapView.swift */; };
 		D08203A32A249C1200425A6D /* MapRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08203A22A249C1200425A6D /* MapRowView.swift */; };
 		D08203A42A249C1200425A6D /* MapRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08203A22A249C1200425A6D /* MapRowView.swift */; };
+		D08203E42A2505B500425A6D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D08203E32A2505B400425A6D /* CoreLocation.framework */; };
 		D0BFABD12A2252A600D4D47B /* MyFavouritePlacesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BFABD02A2252A600D4D47B /* MyFavouritePlacesApp.swift */; };
 		D0BFABD32A2252A600D4D47B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BFABD22A2252A600D4D47B /* ContentView.swift */; };
 		D0BFABD52A2252A700D4D47B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0BFABD42A2252A700D4D47B /* Assets.xcassets */; };
@@ -53,6 +54,8 @@
 /* Begin PBXFileReference section */
 		D082039F2A249B7B00425A6D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		D08203A22A249C1200425A6D /* MapRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRowView.swift; sourceTree = "<group>"; };
+		D08203A52A24FD3900425A6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D08203E32A2505B400425A6D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D0BFABCD2A2252A600D4D47B /* MyFavouritePlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyFavouritePlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0BFABD02A2252A600D4D47B /* MyFavouritePlacesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavouritePlacesApp.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		D0BFABD22A2252A600D4D47B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -76,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D08203E42A2505B500425A6D /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +100,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D08203E22A2505B400425A6D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D08203E32A2505B400425A6D /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D0BFABC42A2252A600D4D47B = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +116,7 @@
 				D0BFABE02A2252A800D4D47B /* MyFavouritePlacesTests */,
 				D0BFABEA2A2252A800D4D47B /* MyFavouritePlacesUITests */,
 				D0BFABCE2A2252A600D4D47B /* Products */,
+				D08203E22A2505B400425A6D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -120,6 +133,7 @@
 		D0BFABCF2A2252A600D4D47B /* MyFavouritePlaces */ = {
 			isa = PBXGroup;
 			children = (
+				D08203A52A24FD3900425A6D /* Info.plist */,
 				D0BFABD62A2252A700D4D47B /* Preview Content */,
 				D0BFABFA2A2252DF00D4D47B /* DataModel */,
 				D0BFABFC2A22532700D4D47B /* ViewModel */,
@@ -493,6 +507,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"MyFavouritePlaces/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyFavouritePlaces/Info.plist;
+				INFOPLIST_KEY_NSLocationUsageDescription = "The app needs to know your location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app needs to know your location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -521,6 +538,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"MyFavouritePlaces/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyFavouritePlaces/Info.plist;
+				INFOPLIST_KEY_NSLocationUsageDescription = "The app needs to know your location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app needs to know your location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

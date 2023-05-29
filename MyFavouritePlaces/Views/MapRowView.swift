@@ -12,6 +12,7 @@ import CoreLocation
 
 struct MapRowView: View {
     @Environment(\.managedObjectContext) var context
+    @EnvironmentObject var mapModel: MapViewModel
     @ObservedObject var place: Place
     @State var image: UIImage?
 
