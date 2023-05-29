@@ -15,9 +15,6 @@ struct MapView: View {
     @Environment(\.editMode) var isEditMode
     @EnvironmentObject var mapModel: MapViewModel
     @ObservedObject var place: Place
-    @State var address = ""
-    @State var longitude = 0.0
-    @State var latitude = 0.0
     
     var body: some View {
         VStack(alignment: .leading){
@@ -29,21 +26,22 @@ struct MapView: View {
                         }
                     }
                 if isEditMode?.wrappedValue == .active{
-                    TextField("Address", text: $address)
+                    TextField("Address", text: $mapModel.name)
                 } else {
-                    Text("\(place.strName)")
+                    Text("\(mapModel.name)")
                 }
             }
             ZStack{
                 Map(coordinateRegion: $mapModel.region)
-            }
-            HStack{
                 Image(systemName: "mappin")
+                    .resizable()
+                    .frame(width: 50, height: 50)
                     .onTapGesture {
                         if isEditMode?.wrappedValue == .active{
                             //      checkLocation()
                         }
                     }
+            }
                 if isEditMode?.wrappedValue == .active{
                     HStack{
                         Text("Latitude: ")
@@ -61,19 +59,16 @@ struct MapView: View {
                         Text("Longitude: \(mapModel.region.center.longitude)")
                     }.padding(.leading, 40)
                 }
-            }
+            
                 
         }.onAppear {
             mapModel.updateModel(place)
-            address = place.strName
         }
-        .navigationTitle("Map of \(place.strName)")
+        .navigationTitle("Map of \(mapModel.name)")
         .navigationBarItems(trailing: HStack{
             Button(action: {
-                place.strName = address
-                //  place.longitude = longitude
-                //  place.latitude = latitude
-                saveData()
+                mapModel.updatePlace()
+                isEditMode?.wrappedValue = .inactive
             }) {
                 Text("Save")
             }

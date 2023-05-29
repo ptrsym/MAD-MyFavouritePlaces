@@ -68,8 +68,6 @@ class MapViewModel: ObservableObject {
         }
     }
     
-    
-    
     func updateModel(_ place: Place){
         self.place = place
         self.name = place.name ?? "no name"
@@ -82,8 +80,8 @@ class MapViewModel: ObservableObject {
     }
     
     func updatePlace() {
-        self.place?.longitude = self.longitude
-        self.place?.latitude = self.latitude
+        self.place?.longitude = self.region.center.longitude
+        self.place?.latitude = self.region.center.latitude
         self.place?.name = self.name
         self.place?.delta = self.delta
         saveData()
@@ -250,6 +248,4 @@ extension DetailView {
         }
     }
 }
-
-
 
