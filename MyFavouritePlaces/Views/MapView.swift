@@ -15,6 +15,9 @@ struct MapView: View {
     @Environment(\.editMode) var isEditMode
     @EnvironmentObject var mapModel: MapViewModel
     @ObservedObject var place: Place
+    @State var zoom = 10.0
+    @State var latitude = ""
+    @State var longitude = ""
     
     var body: some View {
         VStack(alignment: .leading){
@@ -30,39 +33,51 @@ struct MapView: View {
                 } else {
                     Text("\(mapModel.name)")
                 }
+                Spacer()
+                Button("Update"){
+                    checkMap()
+                }
+            }
+            HStack{
+                Text("Latitude: ")
+                TextField("Latitude", text: $latitude)
+                Text("Longitude: ")
+                TextField("Longitude", text: $longitude)
+            }
+            Slider(value: $zoom, in: 10...60) {
+                if !$0 {
+       //             checkZoom()
+                }
             }
             ZStack{
                 Map(coordinateRegion: $mapModel.region)
-                Image(systemName: "mappin")
-                    .resizable()
-                    .frame(width: 50, height: 50)
-                    .onTapGesture {
-                        if isEditMode?.wrappedValue == .active{
-                            //      checkLocation()
+                VStack{
+                    Image(systemName: "mappin")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .padding(.top, 10)
+                        .onTapGesture {
+                            if isEditMode?.wrappedValue == .active{
+                                //      checkLocation()
+                            }
                         }
-                    }
+                    Spacer()
+                }
             }
-                if isEditMode?.wrappedValue == .active{
-                    HStack{
-                        Text("Latitude: ")
-                        TextField("Latitude", text: $mapModel.regionLat)
-                    }.padding(.leading, 40)
-                    HStack{
-                        Text("Longitude: ")
-                        TextField("Longitude", text: $mapModel.regionLong)
-                    }.padding(.leading, 40)
-                } else {
                     HStack{
                         Text("Latitude: \(mapModel.region.center.latitude)")
                     }.padding(.leading, 40)
                     HStack{
                         Text("Longitude: \(mapModel.region.center.longitude)")
                     }.padding(.leading, 40)
-                }
+                
             
                 
         }.onAppear {
             mapModel.updateModel(place)
+        }
+        .task{
+            checkMap()
         }
         .navigationTitle("Map of \(mapModel.name)")
         .navigationBarItems(trailing: HStack{

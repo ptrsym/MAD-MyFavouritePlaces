@@ -43,12 +43,15 @@ experimenting with ways to generate the region data for generating a map, went t
 for computed mapcoords to making a separate class mapviewmodel to handle the map generation and interaction
 researched how to implement a map thumbnail image without generating an interaction map. resulted in making a class
 to handle the thumbnail generator which uses MKMap snapshotter
-repeating error when trying ot generate a snapshot not sure of issue everything seems correct in options setting
+repeating error when trying to generate a snapshot not sure of issue everything seems correct in options setting
+and documentation
 
+30/05/23
+implementing map view/set functions
+some unknown error is causing all map related loading/viewing to not render making troubleshooting and function testing 
+somewhat difficult trying to complete all requirements regardless
 
 ### Video 2
-
-
 
 ## Milestone 3
 

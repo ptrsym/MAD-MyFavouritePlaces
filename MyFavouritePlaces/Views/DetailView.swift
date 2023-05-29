@@ -102,10 +102,10 @@ struct DetailView: View {
             EditButton()
         })
         .onAppear {
-//            name = place.strName
-//            url = place.strUrl
-//            longitude = place.strLongitude
-//            latitude = place.strLatitude
+            name = place.strName
+            url = place.strUrl
+            longitude = place.strLongitude
+            latitude = place.strLatitude
         }
         .task {
             await image = place.getImage()

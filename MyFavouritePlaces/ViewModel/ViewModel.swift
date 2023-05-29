@@ -41,10 +41,9 @@ class MapViewModel: ObservableObject {
                                             CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), span:
                                             MKCoordinateSpan(latitudeDelta: 100, longitudeDelta: 100))
     }
-    
-    var regionLat:String {
+    var latStr:String {
         get{
-            String(format: "%.5f", self.region.center.latitude)
+            String(format: "%.5f", self.latitude)
         }
         set {
             if let doubleValue = Double(newValue), doubleValue >= -90.0, doubleValue <= 90.0 {
@@ -55,9 +54,9 @@ class MapViewModel: ObservableObject {
         }
     }
     
-    var regionLong:String {
+    var longStr:String {
         get{
-            String(format: "%.5f", self.region.center.longitude)
+            String(format: "%.5f", self.longitude)
         }
         set {
             if let doubleValue = Double(newValue), doubleValue >= -180.0, doubleValue <= 180.0 {
@@ -75,8 +74,8 @@ class MapViewModel: ObservableObject {
         self.longitude = place.longitude
         self.delta = place.delta
         self.region = MKCoordinateRegion(center:
-                      CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude), span:
-                      MKCoordinateSpan(latitudeDelta: place.delta, longitudeDelta: place.delta))
+                                            CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude), span:
+                                            MKCoordinateSpan(latitudeDelta: place.delta, longitudeDelta: place.delta))
     }
     
     func updatePlace() {
@@ -87,12 +86,33 @@ class MapViewModel: ObservableObject {
         saveData()
     }
     
-    func checkAddress(){
-        
+
+    func updateFromRegion(){
+        self.longitude = region.center.longitude
+        self.latitude = region.center.latitude
     }
     
-    func checkLocation(){
+    func setRegion(){
+        region.center.latitude = self.latitude
+        region.center.longitude = self.longitude
+        region.span.latitudeDelta = self.delta
+        region.span.longitudeDelta = self.delta
     }
+    
+    func fromLocToAddress() {
+        let coder = CLGeocoder()
+        coder.reverseGeocodeLocation(CLLocation(latitude: self.latitude,
+            longitude: self.longitude)) {marks, error in
+            if let err = error {
+                print("error finding address from location: \(err)")
+                return
+            }
+            let mark = marks?.first
+            let name = mark?.name ?? mark?.country ?? mark?.locality ?? mark?.administrativeArea ?? "No name"
+            self.name = name
+        }
+    }
+
 }
 
 extension Place {
@@ -249,3 +269,22 @@ extension DetailView {
     }
 }
 
+extension MapView {
+    func checkAddress(){
+    }
+    func checkLocation(){
+        mapModel.longStr = longitude
+        mapModel.latStr = latitude
+        mapModel.fromLocToAddress()
+        mapModel.setRegion()
+        
+    }
+    func checkZoom(){
+    }
+    func checkMap(){
+        mapModel.updateFromRegion()
+        latitude = mapModel.latStr
+        longitude = mapModel.longStr
+        mapModel.fromLocToAddress()
+    }
+}
