@@ -8,6 +8,8 @@
 import Foundation
 import CoreData
 import SwiftUI
+import MapKit
+import Foundation
 
 
 var defaultImage = Image(systemName: "photo").resizable()
@@ -23,7 +25,14 @@ func saveData() {
 }
 
 extension Place {
-    
+        
+    var region : MKCoordinateRegion{
+        get{
+            MKCoordinateRegion(center: CLLocationCoordinate2D(
+            latitude: self.latitude, longitude: self.longitude), span:
+            MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+        }
+    }
     
     func addDetail(_ description:String) {
         let context = PersistenceHandler.shared.container.viewContext
@@ -61,6 +70,21 @@ extension Place {
             self.name = newValue
         }
     }
+    
+    var strDelta:String {
+        get {
+            String(format: "%.5f", self.delta)
+        }
+        set {
+            if let doubleValue = Double(newValue){
+                self.delta = doubleValue
+            } else {
+                print("Invalid delta value \(newValue)")
+            }
+        }
+    }
+    
+    
         
     var strLongitude: String {
         get {
