@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 import MapKit
+import CoreLocation
 
 struct MapRowView: View {
     @Environment(\.managedObjectContext) var context
@@ -19,11 +20,12 @@ struct MapRowView: View {
             if let image = image {
                 Image(uiImage: image)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
             } else {
                 Text("Loading...")
             }
+            Spacer()
             Text("View Map")
+
         }
         .task {
             image = await place.generateThumbnailImage()
