@@ -50,6 +50,7 @@ and documentation
 implementing map view/set functions
 some unknown error is causing all map related loading/viewing to not render making troubleshooting and function testing 
 somewhat difficult trying to complete all requirements regardless
+using both async and callback functions from lecture to  get familiar with concepts
 
 ### Video 2
 

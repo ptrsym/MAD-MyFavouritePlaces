@@ -11,10 +11,12 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
-
+//configured default image
 var defaultImage = Image(systemName: "photo").resizable()
+//dictionary to cache images once downloaded
 var downloadImage: [URL: Image] = [:]
 
+//saves contex to persist data
 func saveData() {
     let context = PersistenceHandler.shared.container.viewContext
     do {
@@ -24,6 +26,7 @@ func saveData() {
     }
 }
 
+// class the handle interactions with the MapKit feature
 class MapViewModel: ObservableObject {
     @Published var place: Place?
     @Published var name: String
@@ -41,6 +44,7 @@ class MapViewModel: ObservableObject {
                                             CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), span:
                                             MKCoordinateSpan(latitudeDelta: 100, longitudeDelta: 100))
     }
+    //string representation of stored latitude value. also validates latitude
     var latStr:String {
         get{
             String(format: "%.5f", self.latitude)
@@ -54,6 +58,7 @@ class MapViewModel: ObservableObject {
         }
     }
     
+    // string represtation of stored longitude double. also validates longitude
     var longStr:String {
         get{
             String(format: "%.5f", self.longitude)
@@ -67,6 +72,7 @@ class MapViewModel: ObservableObject {
         }
     }
     
+    // function to link a place instance to an empty mapModel retrieved from environment
     func updateModel(_ place: Place){
         self.place = place
         self.name = place.name ?? "no name"
@@ -78,6 +84,7 @@ class MapViewModel: ObservableObject {
                                             MKCoordinateSpan(latitudeDelta: place.delta, longitudeDelta: place.delta))
     }
     
+    //loads the mapModel configuration back into its associated place instance and saves context
     func updatePlace() {
         self.place?.longitude = self.region.center.longitude
         self.place?.latitude = self.region.center.latitude
@@ -86,12 +93,13 @@ class MapViewModel: ObservableObject {
         saveData()
     }
     
-
+    //updates stored long/lat values based on current orientation
     func updateFromRegion(){
         self.longitude = region.center.longitude
         self.latitude = region.center.latitude
     }
     
+    //pans the map to the region specified in stored mapmodel attributes with an animation
     func setRegion(){
         withAnimation{
             region.center.latitude = self.latitude
@@ -101,6 +109,8 @@ class MapViewModel: ObservableObject {
         }
        }
     
+    
+    // function to retrieve map address location based on model stored coordinate attributes
     func fromLocToAddress() {
         let coder = CLGeocoder()
         coder.reverseGeocodeLocation(CLLocation(latitude: self.latitude,
@@ -116,7 +126,7 @@ class MapViewModel: ObservableObject {
     }
     
     
-    
+    // escaping callback function interpretation of address lookup
     func fromAddressToLocOld(_ callback: @escaping () -> Void) {
         let encode = CLGeocoder()
         encode.geocodeAddressString(self.name) {marks, error in
@@ -133,6 +143,7 @@ class MapViewModel: ObservableObject {
         }
     }
     
+    //asynch interpretation of looking up location coords based on address
     func fromAddressToLoc() async {
         let encode = CLGeocoder()
         let marks = try? await encode.geocodeAddressString(self.name)
@@ -144,10 +155,7 @@ class MapViewModel: ObservableObject {
             }
         }
     
-    
-    
-    
-    
+    // zoom function for map slider
     func zoomToDelta (_ zoom: Double) {
         let c1 = -10.0
         let c2 = 3.0
@@ -158,6 +166,7 @@ class MapViewModel: ObservableObject {
 
 extension Place {
     
+    // function to generate a thumbnail image based on current map orientation
     func generateThumbnailImage() async -> UIImage?{
         
         // create options instances and configure to current place setting
@@ -205,7 +214,7 @@ extension Place {
         
         return defaultImage
     }
-    
+        // validates delta value and adds string retrieval
         var strDelta:String {
             get {
                 String(self.delta)
@@ -227,7 +236,9 @@ extension Place {
             self.name = newValue
         }
     }
-            
+    
+    //computed value to validate correct long entry
+    //gets a string representation of stored double8
     var strLongitude: String {
         get {
             String(format: "%.5f", self.longitude)
@@ -241,6 +252,8 @@ extension Place {
         }
     }
     
+    //computed value to validate correct lat entry into attribute and retrieve
+    // a string representation of stored double value
     var strLatitude:String{
         get{
             String(format: "%.5f", self.latitude)
@@ -254,6 +267,7 @@ extension Place {
             }
         }
     
+    //computed value to fetch a string url from image or set url from string
     var strUrl: String {
         get {
             self.imgurl?.absoluteString ?? ""
@@ -277,6 +291,7 @@ extension Detail {
 }
 
 extension ContentView {
+    // deletes a place entity from collection8
     func delPlace(index: IndexSet) {
         withAnimation {
             index.map{favouritePlaces[$0]}.forEach { place in
@@ -285,6 +300,7 @@ extension ContentView {
             saveData()
         }
     }
+    // adds an empty new place entity to collection
     func addPlace() {
         let newPlace = Place(context: context)
         newPlace.strName = "New Place"
@@ -294,6 +310,7 @@ extension ContentView {
     
 }
 extension DetailView {
+    // deletes a detail relationship from a place
     func delDetail(index: IndexSet) {
         withAnimation {
             guard let detailsArray = Array(place.details ?? []) as? [Detail] else {
@@ -311,6 +328,9 @@ extension DetailView {
 }
 
 extension MapView {
+    
+    
+    // callback function updating the local long/lat parameters from an address
     func checkAddress(){
         mapModel.fromAddressToLocOld(updateViewCoord)
 //        Task{
@@ -318,8 +338,10 @@ extension MapView {
 //            latitude = mapModel.latStr
 //            longitude = mapModel.longStr
 //        }
-        
     }
+    
+    
+    // retrieves the address name of the associated coordinates and centres the map
     func checkLocation(){
         mapModel.longStr = longitude
         mapModel.latStr = latitude
@@ -327,12 +349,17 @@ extension MapView {
         mapModel.setRegion()
         
     }
+    
+    // updates map as the mapview zooms in and out and sets the region
     func checkZoom(){
         checkMap()
         mapModel.zoomToDelta(zoom)
         mapModel.fromLocToAddress()
         mapModel.setRegion()
     }
+    
+    // takes the current map view and assigns local coordinate parameters to
+    // the current orientation then finds the address of coordinates
     func checkMap(){
         mapModel.updateFromRegion()
         latitude = mapModel.latStr
@@ -340,6 +367,7 @@ extension MapView {
         mapModel.fromLocToAddress()
     }
     
+    //sets local coords based on model configuration
     func updateViewCoord() {
         latitude = mapModel.latStr
         longitude = mapModel.longStr

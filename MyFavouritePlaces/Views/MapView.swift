@@ -72,8 +72,6 @@ struct MapView: View {
                         Text("Longitude: \(mapModel.region.center.longitude)")
                     }.padding(.leading, 40)
                 
-            
-                
         }.onAppear {
             mapModel.updateModel(place)
         }
