@@ -88,6 +88,13 @@ struct DetailView: View {
                     
                 }.padding(.top, -20)
             }
+            
+            
+            
+            // timezone here
+            
+            
+            
         }
         
         .navigationBarTitle("\(place.strName)").padding(.bottom, -40)

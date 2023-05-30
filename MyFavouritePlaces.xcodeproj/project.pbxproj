@@ -137,12 +137,12 @@
 		D0BFABCF2A2252A600D4D47B /* MyFavouritePlaces */ = {
 			isa = PBXGroup;
 			children = (
-				D0BFABD62A2252A700D4D47B /* Preview Content */,
+				D0BFABD02A2252A600D4D47B /* MyFavouritePlacesApp.swift */,
 				D0BFABFA2A2252DF00D4D47B /* DataModel */,
 				D0BFABFC2A22532700D4D47B /* ViewModel */,
 				D0BFABFB2A22531A00D4D47B /* Views */,
-				D0BFABD02A2252A600D4D47B /* MyFavouritePlacesApp.swift */,
 				D0BFABD42A2252A700D4D47B /* Assets.xcassets */,
+				D0BFABD62A2252A700D4D47B /* Preview Content */,
 			);
 			path = MyFavouritePlaces;
 			sourceTree = "<group>";
