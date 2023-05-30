@@ -275,6 +275,8 @@ extension MapView {
 }
 
 
+
+
 let delta = 10.0
 
 class LocationManger: NSObject, CLLocationManagerDelegate, ObservableObject {

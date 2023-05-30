@@ -75,7 +75,6 @@ extension Place {
                 }
             }
         }
-    
     var strName:String {
         get {
             self.name ?? "no name"
@@ -124,7 +123,19 @@ extension Place {
             self.imgurl = url
             }
         }
+    
+    
+    
+    
+    
 }
+
+
+
+
+
+
+
 
 
 // let urlStr = "https://api.sunrisesunset.io/json?lat=\(latitude)&lng=\(longitude)&timezone=UTC"

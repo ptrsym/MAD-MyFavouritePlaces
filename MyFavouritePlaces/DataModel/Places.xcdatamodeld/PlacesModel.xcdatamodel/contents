@@ -10,7 +10,7 @@
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="timeZone" optional="YES" attributeType="String"/>
+        <attribute name="timezone" optional="YES" attributeType="String"/>
         <relationship name="details" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Detail" inverseName="place" inverseEntity="Detail"/>
     </entity>
 </model>
