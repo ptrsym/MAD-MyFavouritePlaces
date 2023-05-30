@@ -16,10 +16,12 @@ struct PlaceRowView: View {
     @State var image = defaultImage
     
     var body: some View {
+        
         HStack{
             image.frame(width: 30, height: 30).clipShape(Rectangle())
                 .padding(.trailing, 10)
             Text(place.strName)
+            
         }.task {
             await image = place.getImage()
         }

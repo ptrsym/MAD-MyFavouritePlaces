@@ -24,6 +24,7 @@ struct DetailView: View {
         VStack (alignment: .leading) {
             if isEditMode?.wrappedValue == .active{
                 List{
+                    
                     TextField("Enter place a name:", text:$name)
                         .padding(.leading, -20)
                         .listRowBackground(Color.clear)
@@ -33,10 +34,12 @@ struct DetailView: View {
                     TextField("Enter a location detail", text: $newDetail)
                         .listRowBackground(Color.clear)
                         .padding(.leading, -20)
+                    
                     //unwraps place-details relationship and converts to workable array
                     ForEach(place.details?.allObjects as? [Detail] ?? []) { detail in
                         Text(detail.detail ?? "")
                     }.onDelete(perform:delDetail)
+                    
                     HStack {
                         Text("Longitude:")
                         TextField("Enter location", text:$longitude)
@@ -44,6 +47,7 @@ struct DetailView: View {
                     .listRowBackground(Color.clear)
                     .padding(.leading, -20)
                     .padding(.top, 10)
+                    
                     HStack {
                         Text("Latitude:")
                         TextField("Enter latitude", text:$latitude)
@@ -59,6 +63,7 @@ struct DetailView: View {
                         .padding(20)
                         .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
                 }.padding(.bottom, -20)
+                
                 List{
                     NavigationLink(destination: MapView(place: place)){
                         MapRowView(place: place)
@@ -67,6 +72,7 @@ struct DetailView: View {
                         .padding(.leading, -20)
                         .padding(.bottom, 10)
                         .listRowBackground(Color.clear)
+                    
                     //unpacks the place-details relationship from an NSSet into a workable array
                     ForEach(place.details?.allObjects as? [Detail] ?? []) { detail in
                         Text(detail.detail ?? "")
@@ -79,6 +85,7 @@ struct DetailView: View {
                     Text("Latitude: \(place.latitude)")
                         .padding(.leading, -20)
                         .listRowBackground(Color.clear)
+                    
                 }.padding(.top, -20)
             }
         }

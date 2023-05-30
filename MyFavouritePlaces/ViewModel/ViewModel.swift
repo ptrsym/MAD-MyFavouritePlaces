@@ -26,7 +26,7 @@ func saveData() {
     }
 }
 
-// class the handle interactions with the MapKit feature
+// class to handle interactions with the MapKit feature
 class MapViewModel: ObservableObject {
     @Published var place: Place?
     @Published var name: String
@@ -72,7 +72,7 @@ class MapViewModel: ObservableObject {
         }
     }
     
-    // function to link a place instance to an empty mapModel retrieved from environment
+    // links a place instance to an empty mapModel retrieved from environment
     func updateModel(_ place: Place){
         self.place = place
         self.name = place.name ?? "no name"
@@ -186,7 +186,7 @@ extension Place {
             return nil
         }
     }
-            
+    // adds a new detail to the place relationship from the context
     func addDetail(_ description:String) {
         let context = PersistenceHandler.shared.container.viewContext
         let newDetail = Detail(context: context)
@@ -237,8 +237,8 @@ extension Place {
         }
     }
     
-    //computed value to validate correct long entry
-    //gets a string representation of stored double8
+    //computed value to validate correct longitude entry
+    //gets a string representation of stored double
     var strLongitude: String {
         get {
             String(format: "%.5f", self.longitude)
@@ -252,8 +252,8 @@ extension Place {
         }
     }
     
-    //computed value to validate correct lat entry into attribute and retrieve
-    // a string representation of stored double value
+    //computed value to validate correct latitude entry
+    // gets a string representation of stored double value
     var strLatitude:String{
         get{
             String(format: "%.5f", self.latitude)
@@ -279,16 +279,16 @@ extension Place {
         }
 }
     
-extension Detail {
-    var detailString:String {
-        get {
-            self.detail ?? "Add a description for your place"
-        }
-        set {
-            self.detail = newValue
-        }
-    }
-}
+//extension Detail {
+//    var detailString:String {
+//        get {
+//            self.detail ?? "Add a description for your place"
+//        }
+//        set {
+//            self.detail = newValue
+//        }
+//    }
+//}
 
 extension ContentView {
     // deletes a place entity from collection8
@@ -300,7 +300,7 @@ extension ContentView {
             saveData()
         }
     }
-    // adds an empty new place entity to collection
+    // adds an empty new place entity to a fetched place collection
     func addPlace() {
         let newPlace = Place(context: context)
         newPlace.strName = "New Place"
@@ -339,8 +339,7 @@ extension MapView {
 //            longitude = mapModel.longStr
 //        }
     }
-    
-    
+        
     // retrieves the address name of the associated coordinates and centres the map
     func checkLocation(){
         mapModel.longStr = longitude

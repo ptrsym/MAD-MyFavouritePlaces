@@ -31,8 +31,6 @@ tried to build an .onDelete function for the lists in the detail view using a si
 found difficulties accessing the relationship set and got a fault error with initial function took a different approach to convert the NSSet to a swift array
 added image functions to viewmodel
 added thumbnail and image to views
-working project
-
 
 ### Video 1 https://youtu.be/yd4U63tEbmY
 
@@ -59,8 +57,8 @@ using both async and callback functions from lecture to  get familiar with conce
 
 30/05/23
 implemented location to address, address to location, saving from map pin click
-
-
+sorted and updated code comments for submission
+added some test cases to show understanding. a lot of test functions seem overly complicated for some simple tests
 
 
 ### Video 3

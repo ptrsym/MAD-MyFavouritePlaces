@@ -54,7 +54,7 @@
 /* Begin PBXFileReference section */
 		D082039F2A249B7B00425A6D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		D08203A22A249C1200425A6D /* MapRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRowView.swift; sourceTree = "<group>"; };
-		D08203A52A24FD3900425A6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D08203A52A24FD3900425A6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D08203E32A2505B400425A6D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D0BFABCD2A2252A600D4D47B /* MyFavouritePlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyFavouritePlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0BFABD02A2252A600D4D47B /* MyFavouritePlacesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavouritePlacesApp.swift; sourceTree = "<group>"; wrapsLines = 0; };
@@ -112,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				D0BFAC0D2A229E6000D4D47B /* readme.md */,
+				D08203A52A24FD3900425A6D /* Info.plist */,
 				D0BFABCF2A2252A600D4D47B /* MyFavouritePlaces */,
 				D0BFABE02A2252A800D4D47B /* MyFavouritePlacesTests */,
 				D0BFABEA2A2252A800D4D47B /* MyFavouritePlacesUITests */,
@@ -133,7 +134,6 @@
 		D0BFABCF2A2252A600D4D47B /* MyFavouritePlaces */ = {
 			isa = PBXGroup;
 			children = (
-				D08203A52A24FD3900425A6D /* Info.plist */,
 				D0BFABD62A2252A700D4D47B /* Preview Content */,
 				D0BFABFA2A2252DF00D4D47B /* DataModel */,
 				D0BFABFC2A22532700D4D47B /* ViewModel */,
