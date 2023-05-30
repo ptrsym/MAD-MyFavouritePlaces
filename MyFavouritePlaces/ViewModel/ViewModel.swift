@@ -114,7 +114,10 @@ class MapViewModel: ObservableObject {
             self.name = name
         }
     }
-    func fromAddressToLoc() {
+    
+    
+    
+    func fromAddressToLocOld(_ callback: @escaping () -> Void) {
         let encode = CLGeocoder()
         encode.geocodeAddressString(self.name) {marks, error in
             if let err = error {
@@ -124,10 +127,26 @@ class MapViewModel: ObservableObject {
             if let mark = marks?.first {
                 self.latitude = mark.location?.coordinate.latitude ?? self.latitude
                 self.longitude = mark.location?.coordinate.longitude ?? self.longitude
+                callback()
                 self.setRegion()
             }
         }
     }
+    
+    func fromAddressToLoc() async {
+        let encode = CLGeocoder()
+        let marks = try? await encode.geocodeAddressString(self.name)
+        
+            if let mark = marks?.first {
+                self.latitude = mark.location?.coordinate.latitude ?? self.latitude
+                self.longitude = mark.location?.coordinate.longitude ?? self.longitude
+                self.setRegion()
+            }
+        }
+    
+    
+    
+    
     
     func zoomToDelta (_ zoom: Double) {
         let c1 = -10.0
@@ -293,7 +312,13 @@ extension DetailView {
 
 extension MapView {
     func checkAddress(){
-        mapModel.fromAddressToLoc()
+        mapModel.fromAddressToLocOld(updateViewCoord)
+//        Task{
+//            await mapModel.fromAddressToLoc()
+//            latitude = mapModel.latStr
+//            longitude = mapModel.longStr
+//        }
+        
     }
     func checkLocation(){
         mapModel.longStr = longitude
@@ -314,4 +339,10 @@ extension MapView {
         longitude = mapModel.longStr
         mapModel.fromLocToAddress()
     }
+    
+    func updateViewCoord() {
+        latitude = mapModel.latStr
+        longitude = mapModel.longStr
+    }
+    
 }
