@@ -25,9 +25,10 @@ struct MapView: View {
                 Image(systemName: "magnifyingglass")
                     .onTapGesture {
                         if isEditMode?.wrappedValue == .active{
-                      //      checkAddress()
+                           checkAddress()
                         }
                     }
+                Text("Address: ")
                 if isEditMode?.wrappedValue == .active{
                     TextField("Address", text: $mapModel.name)
                 } else {

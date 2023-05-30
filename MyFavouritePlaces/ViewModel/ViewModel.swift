@@ -114,6 +114,20 @@ class MapViewModel: ObservableObject {
             self.name = name
         }
     }
+    func fromAddressToLoc() {
+        let encode = CLGeocoder()
+        encode.geocodeAddressString(self.name) {marks, error in
+            if let err = error {
+                print("error finding location \(err)")
+                return
+            }
+            if let mark = marks?.first {
+                self.latitude = mark.location?.coordinate.latitude ?? self.latitude
+                self.longitude = mark.location?.coordinate.longitude ?? self.longitude
+                self.setRegion()
+            }
+        }
+    }
     
     func zoomToDelta (_ zoom: Double) {
         let c1 = -10.0
@@ -279,6 +293,7 @@ extension DetailView {
 
 extension MapView {
     func checkAddress(){
+        mapModel.fromAddressToLoc()
     }
     func checkLocation(){
         mapModel.longStr = longitude
@@ -288,7 +303,7 @@ extension MapView {
         
     }
     func checkZoom(){
-        mapModel.updateFromRegion()
+        checkMap()
         mapModel.zoomToDelta(zoom)
         mapModel.fromLocToAddress()
         mapModel.setRegion()
