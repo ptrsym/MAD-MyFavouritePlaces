@@ -59,6 +59,9 @@ using both async and callback functions from lecture to  get familiar with conce
 implemented location to address, address to location, saving from map pin click
 sorted and updated code comments for submission
 added some test cases to show understanding. a lot of test functions seem overly complicated for some simple tests
+implement sunrise/sunset/timezone fetching/display. used an extension to detailview to practice that style
 
+31/05/23
+building documentation
 
 ### Video 3

@@ -29,7 +29,7 @@ struct MapRowView: View {
             Text("View Map")
 
         }
-        //creat an image thumbnail based on the current map orientation
+        //create an image thumbnail based on the current map orientation
         .task {
             image = await place.generateThumbnailImage()
         }

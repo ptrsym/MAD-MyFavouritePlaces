@@ -85,18 +85,16 @@ struct DetailView: View {
                     Text("Latitude: \(place.latitude)")
                         .padding(.leading, -20)
                         .listRowBackground(Color.clear)
-                    
+            
                 }.padding(.top, -20)
+                
             }
-            
-            
-            
-            // timezone here
-            
-            
-            
+            HStack {
+                riseView
+                Spacer()
+                setView
+            }.offset(y: -UIScreen.main.bounds.height * 0.1)
         }
-        
         .navigationBarTitle("\(place.strName)").padding(.bottom, -40)
         .navigationBarItems(trailing: HStack{
             //save all changes and reset relevant fields. avoids adding an empty detail
@@ -129,6 +127,8 @@ struct DetailView: View {
         //retrieve the image from the cache if available
         .task {
             await image = place.getImage()
+            place.fetchTimeZone()
+            place.fetchRiseSet()
         }
     }
 }
