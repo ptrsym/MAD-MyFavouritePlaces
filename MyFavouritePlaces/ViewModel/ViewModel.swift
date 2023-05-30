@@ -16,7 +16,7 @@ var defaultImage = Image(systemName: "photo").resizable()
 //dictionary to cache images once downloaded
 var downloadImage: [URL: Image] = [:]
 
-//saves contex to persist data
+//saves context to persist data
 func saveData() {
     let context = PersistenceHandler.shared.container.viewContext
     do {

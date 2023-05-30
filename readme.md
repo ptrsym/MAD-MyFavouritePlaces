@@ -50,10 +50,17 @@ and documentation
 implementing map view/set functions
 some unknown error is causing all map related loading/viewing to not render making troubleshooting and function testing 
 somewhat difficult trying to complete all requirements regardless
+tried lecture notes/videos/youtube/documentation/stackoverflow/openAI/permissions/frameworks to fix problem with no results - must be broken software issue
 using both async and callback functions from lecture to  get familiar with concepts
 
-### Video 2
+### Video 2 https://youtu.be/F45CtmtMxAU
 
 ## Milestone 3
+
+30/05/23
+implemented location to address, address to location, saving from map pin click
+
+
+
 
 ### Video 3
