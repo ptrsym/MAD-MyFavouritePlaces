@@ -93,11 +93,13 @@ class MapViewModel: ObservableObject {
     }
     
     func setRegion(){
-        region.center.latitude = self.latitude
-        region.center.longitude = self.longitude
-        region.span.latitudeDelta = self.delta
-        region.span.longitudeDelta = self.delta
-    }
+        withAnimation{
+            region.center.latitude = self.latitude
+            region.center.longitude = self.longitude
+            region.span.latitudeDelta = self.delta
+            region.span.longitudeDelta = self.delta
+        }
+       }
     
     func fromLocToAddress() {
         let coder = CLGeocoder()
@@ -111,6 +113,12 @@ class MapViewModel: ObservableObject {
             let name = mark?.name ?? mark?.country ?? mark?.locality ?? mark?.administrativeArea ?? "No name"
             self.name = name
         }
+    }
+    
+    func zoomToDelta (_ zoom: Double) {
+        let c1 = -10.0
+        let c2 = 3.0
+        self.delta = pow(10.0, zoom / c1 + c2)
     }
 
 }
@@ -280,6 +288,10 @@ extension MapView {
         
     }
     func checkZoom(){
+        mapModel.updateFromRegion()
+        mapModel.zoomToDelta(zoom)
+        mapModel.fromLocToAddress()
+        mapModel.setRegion()
     }
     func checkMap(){
         mapModel.updateFromRegion()

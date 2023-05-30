@@ -46,7 +46,7 @@ struct MapView: View {
             }
             Slider(value: $zoom, in: 10...60) {
                 if !$0 {
-       //             checkZoom()
+                   checkZoom()
                 }
             }
             ZStack{
