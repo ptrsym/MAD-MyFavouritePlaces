@@ -25,6 +25,7 @@ struct MapView: View {
                 Image(systemName: "magnifyingglass")
                     .onTapGesture {
                         if isEditMode?.wrappedValue == .active{
+                            //using callback method queue finding location coordinates based on address field
                            checkAddress()
                         }
                     }
@@ -36,6 +37,7 @@ struct MapView: View {
                 }
                 Spacer()
                 Button("Update"){
+                    // tap to update local fields with current orientation and address
                     checkMap()
                 }
             }
@@ -45,12 +47,15 @@ struct MapView: View {
                 Text("Longitude: ")
                 TextField("Longitude", text: $longitude)
             }
+            // add a slider to set zoom level
             Slider(value: $zoom, in: 10...60) {
                 if !$0 {
+                    //reorient and update map details based on zoom scale
                    checkZoom()
                 }
             }
             ZStack{
+                //display map based on stored region specifications
                 Map(coordinateRegion: $mapModel.region)
                 VStack{
                     Image(systemName: "mappin")
@@ -59,33 +64,37 @@ struct MapView: View {
                         .padding(.top, 10)
                         .onTapGesture {
                             if isEditMode?.wrappedValue == .active{
+                                // tap to find address name of current orientation coordinates
                                 checkLocation()
                             }
                         }
                     Spacer()
                 }
-            }
+            }       // bind current map orientation to long/lat display
                     HStack{
                         Text("Latitude: \(mapModel.region.center.latitude)")
                     }.padding(.leading, 40)
                     HStack{
                         Text("Longitude: \(mapModel.region.center.longitude)")
                     }.padding(.leading, 40)
-                
+        // load place into mapviewmodel on view entry
         }.onAppear {
             mapModel.updateModel(place)
         }
+        // queue map centering on place location coordinates on view entry
         .task{
             checkMap()
         }
         .navigationTitle("Map of \(mapModel.name)")
         .navigationBarItems(trailing: HStack{
+            // update associated place
             Button(action: {
                 mapModel.updatePlace()
                 isEditMode?.wrappedValue = .inactive
             }) {
                 Text("Save")
             }
+            // edit mode enables texfield manual modification
             EditButton()
         })
     }

@@ -18,6 +18,7 @@ struct MapRowView: View {
 
     var body: some View {
         HStack {
+            //load map thumbnail when ready else display loading
             if let image = image {
                 Image(uiImage: image)
                     .resizable()
@@ -28,6 +29,7 @@ struct MapRowView: View {
             Text("View Map")
 
         }
+        //creat an image thumbnail based on the current map orientation
         .task {
             image = await place.generateThumbnailImage()
         }

@@ -33,6 +33,7 @@ struct DetailView: View {
                     TextField("Enter a location detail", text: $newDetail)
                         .listRowBackground(Color.clear)
                         .padding(.leading, -20)
+                    //unwraps place-details relationship and converts to workable array
                     ForEach(place.details?.allObjects as? [Detail] ?? []) { detail in
                         Text(detail.detail ?? "")
                     }.onDelete(perform:delDetail)
@@ -51,6 +52,7 @@ struct DetailView: View {
                     .padding(.leading, -20)
                 }
             } else {
+                //finer control over image size
                 GeometryReader{ geometry in
                     image
                         .scaledToFit()
@@ -65,6 +67,7 @@ struct DetailView: View {
                         .padding(.leading, -20)
                         .padding(.bottom, 10)
                         .listRowBackground(Color.clear)
+                    //unpacks the place-details relationship from an NSSet into a workable array
                     ForEach(place.details?.allObjects as? [Detail] ?? []) { detail in
                         Text(detail.detail ?? "")
                     }.onDelete(perform: delDetail)
@@ -82,6 +85,7 @@ struct DetailView: View {
         
         .navigationBarTitle("\(place.strName)").padding(.bottom, -40)
         .navigationBarItems(trailing: HStack{
+            //save all changes and reset relevant fields. avoids adding an empty detail
             Button(action: {
                 place.strName = name
                 place.strUrl = url
@@ -101,12 +105,14 @@ struct DetailView: View {
             }
             EditButton()
         })
+        //display correct field values
         .onAppear {
             name = place.strName
             url = place.strUrl
             longitude = place.strLongitude
             latitude = place.strLatitude
         }
+        //retrieve the image from the cache if available
         .task {
             await image = place.getImage()
         }
