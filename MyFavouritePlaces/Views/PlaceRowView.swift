@@ -27,8 +27,3 @@ struct PlaceRowView: View {
     }
 }
 
-//struct PlaceRowView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PlaceRowView()
-//    }
-//}

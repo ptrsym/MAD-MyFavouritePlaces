@@ -24,9 +24,6 @@ struct ContentView: View {
                         }
                     }.onDelete(perform: delPlace)
                 }.padding()
-//                    .onAppear{
-//                        fetchData()
-//                    }
             }
             .navigationTitle("My Favourite Places")
             .navigationBarItems(
