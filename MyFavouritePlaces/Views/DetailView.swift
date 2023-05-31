@@ -56,44 +56,51 @@ struct DetailView: View {
                     .padding(.leading, -20)
                 }
             } else {
-                //finer control over image size
+                // giving more space for list details
                 GeometryReader{ geometry in
-                    image
-                        .scaledToFit()
-                        .padding(20)
-                        .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
-                }.padding(.bottom, -20)
-                
-                List{
-                    NavigationLink(destination: MapView(place: place)){
-                        MapRowView(place: place)
-                    }
-                    Text("Location Details:")
-                        .padding(.leading, -20)
-                        .padding(.bottom, 10)
-                        .listRowBackground(Color.clear)
-                    
-                    //unpacks the place-details relationship from an NSSet into a workable array
-                    ForEach(place.details?.allObjects as? [Detail] ?? []) { detail in
-                        Text(detail.detail ?? "")
-                    }.onDelete(perform: delDetail)
-                    
-                    Text("Longitude: \(place.longitude)")
-                        .padding(.leading, -20)
-                        .padding(.top, 10)
-                        .listRowBackground(Color.clear)
-                    Text("Latitude: \(place.latitude)")
-                        .padding(.leading, -20)
-                        .listRowBackground(Color.clear)
-            
-                }.padding(.top, -20)
-                
+                    VStack {
+                        //finer control over image size and orientation
+                        GeometryReader{ geometry in
+                            image
+                                .scaledToFit()
+                                .padding(20)
+                                .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
+                                .offset(y: geometry.size.height * 0.20)
+                        }
+                        
+                        
+                        List{
+                            NavigationLink(destination: MapView(place: place)){
+                                MapRowView(place: place)
+                            }
+                            Text("Location Details:")
+                                .padding(.leading, -20)
+                                .padding(.bottom, 10)
+                                .listRowBackground(Color.clear)
+                            
+                            //unpacks the place-details relationship from an NSSet into a workable array
+                            ForEach(place.details?.allObjects as? [Detail] ?? []) { detail in
+                                Text(detail.detail ?? "")
+                            }.onDelete(perform: delDetail)
+                            
+                            Text("Longitude: \(place.longitude)")
+                                .padding(.leading, -20)
+                                .padding(.top, 10)
+                                .listRowBackground(Color.clear)
+                            Text("Latitude: \(place.latitude)")
+                                .padding(.leading, -20)
+                                .listRowBackground(Color.clear)
+                            
+                        }.padding(.top, -20)
+                    } .offset(y: -geometry.size.height * 0.15)
+                }
             }
             HStack {
                 riseView
                 Spacer()
                 setView
             }.offset(y: -UIScreen.main.bounds.height * 0.1)
+                .font(.footnote)
         }
         .navigationBarTitle("\(place.strName)").padding(.bottom, -40)
         .navigationBarItems(trailing: HStack{
@@ -124,10 +131,10 @@ struct DetailView: View {
             longitude = place.strLongitude
             latitude = place.strLatitude
         }
-        //retrieve the image from the cache if available
+
         .task {
             await image = place.getImage()
-            place.fetchTimeZone()
+      //    place.fetchTimeZone()
             place.fetchRiseSet()
         }
     }

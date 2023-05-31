@@ -23,7 +23,7 @@ struct MapRowView: View {
                 Image(uiImage: image)
                     .resizable()
             } else {
-                Text("Loading...")
+                ProgressView()
             }
             Spacer()
             Text("View Map")

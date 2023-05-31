@@ -63,5 +63,9 @@ implement sunrise/sunset/timezone fetching/display. used an extension to detailv
 
 31/05/23
 building documentation
+opting not to use the timezone conversion - takes up too much UI space local time is the default display
+for fetched sunrise and sunset results if you request with a default urlstring
+leaving code in to show understanding
+assignment working
 
 ### Video 3

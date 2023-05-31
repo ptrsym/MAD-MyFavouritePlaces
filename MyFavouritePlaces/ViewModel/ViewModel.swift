@@ -314,7 +314,7 @@ extension Place {
     
     
     func fetchRiseSet() {
-        let urlStr = "https://api.sunrisesunset.io/json?lat=\(self.latitude)&lng=\(self.longitude)&timezone=UTC"
+        let urlStr = "https://api.sunrisesunset.io/json?lat=\(self.latitude)&lng=\(self.longitude)"
         print("\(self.latitude) \(self.longitude)")
         
         guard let url = URL(string: urlStr) else {
@@ -437,7 +437,7 @@ extension DetailView {
         }
     }
     
-    var riseView : some View {
+    var riseViewConverted : some View {
         HStack {
             Text("Sunrise:")
             if let rise = place.sunRise{
@@ -453,7 +453,7 @@ extension DetailView {
         }
     }
     
-    var setView : some View {
+    var setViewConverted : some View {
         HStack {
             Text("Sunset:")
             if let set = place.sunSet{
@@ -469,7 +469,28 @@ extension DetailView {
         }
     }
     
-    
+    var riseView: some View {
+        HStack {
+            Text("Sunrise:")
+            Image(systemName: "sun.and.horizon.fill").foregroundColor(.yellow)
+            if let rise = place.sunRise {
+                Text("Local: \(rise)")
+            } else {
+                ProgressView()
+            }
+        }
+    }
+    var setView: some View {
+        HStack {
+            Text("Sunset:")
+            Image(systemName: "moon.fill").foregroundColor(.white)
+            if let set = place.sunSet {
+                Text("Local: \(set)")
+            } else {
+                ProgressView()
+            }
+        }
+    }
 }
 extension MapView {
     
