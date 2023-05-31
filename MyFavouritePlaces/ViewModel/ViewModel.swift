@@ -32,7 +32,7 @@ func saveData() {
 ///
 /// The `MapViewModel` class represents a view model for managing map-related data and functionality.
 /// It provides properties for storing and accessing information about a specific place, including its name, latitude, longitude, delta value, and region on the map.
-/// Use the `MapViewModel` class to configure and update the map view in your application, and observe the published properties to respond to changes in the map data.
+/// Call an instance of  the `MapViewModel` class to configure and update the map view in your application, and observe the published properties to respond to changes in the map data.
 
 class MapViewModel: ObservableObject {
     @Published var place: Place?
@@ -138,7 +138,10 @@ class MapViewModel: ObservableObject {
        }
     
     
-    // function to retrieve map address location based on model stored coordinate attributes
+    /// Function to retrieve map address location based on model stored coordinate attributes
+    ///
+    ///  A callback function to perform a reverse geocode lookup to retrieve an address string based on the current map orientation coordinates.
+    ///  Assigns the address to the name attribute of the model.
     func fromLocToAddress() {
         let coder = CLGeocoder()
         coder.reverseGeocodeLocation(CLLocation(latitude: self.latitude,
@@ -154,7 +157,12 @@ class MapViewModel: ObservableObject {
     }
     
     
-    // escaping callback function interpretation of address lookup
+
+    /// Finds the coordinates of the current address configuration of the model.
+    ///
+    /// This function performs a geocode address string lookup to match the address string provided by the model to a set of longitude and latitude coordinates.
+    /// It uses a callback method with an escaping functin to achieve this so it can  correctly adjust the longitude and latitude fields of the view and centre the map view over the correct region with an animation.
+    /// - Parameter callback: a callback function that updates the view's longitude and latitude textfields when the first lookup is completed.
     func fromAddressToLocOld(_ callback: @escaping () -> Void) {
         let encode = CLGeocoder()
         encode.geocodeAddressString(self.name) {marks, error in
@@ -171,7 +179,10 @@ class MapViewModel: ObservableObject {
         }
     }
     
-    //asynch interpretation of looking up location coords based on address
+    ///Asynchronous  interpretation of looking up location coords based on address
+    ///
+    /// This asynchronous function performs a geocoder lookup to convert an address to a set of location coordinates representing that address.
+    /// It sets the model's attributes to the new coordinates and centres the map view over the found region.
     func fromAddressToLoc() async {
         let encode = CLGeocoder()
         let marks = try? await encode.geocodeAddressString(self.name)
@@ -183,7 +194,11 @@ class MapViewModel: ObservableObject {
             }
         }
     
-    // zoom function for map slider
+    /// Zoom function for map slider
+    ///
+    /// A function to adjust the zoom of the map view based on the slider configuration.
+    /// It uses a zoom variable to transform the locationdelta of the region currently being inspected
+    /// - Parameter zoom: A variable to set the scale factor of the zoom slider.
     func zoomToDelta (_ zoom: Double) {
         let c1 = -10.0
         let c2 = 3.0
@@ -194,7 +209,11 @@ class MapViewModel: ObservableObject {
 
 extension Place {
     
-    // function to generate a thumbnail image based on current map orientation
+    /// Function to generate a thumbnail image based on current map orientation
+    ///
+    /// This function generates a snapshot of the map that would be displayed given the coordinates of the associated place to be used as a thumbnail.
+    /// It uses MKShapshotter to generate this image by first configuring the options with the place attributes and the desired image size.
+    /// - Returns: a UIImage representing the map of the associated place configured to thumbnail size. Nil if the operation errors.
     func generateThumbnailImage() async -> UIImage?{
         
         // create options instances and configure to current place setting
@@ -214,7 +233,11 @@ extension Place {
             return nil
         }
     }
-    // adds a new detail to the place relationship from the context
+    /// Adds a new detail to the place relationship from the context
+    ///
+    /// Creates a new detail entity from the  context and then assigns it the value of the parameter string.
+    /// Assigns this detail entity to its associated place via the place relationship in CoreData.
+    /// - Parameter description: A description of the place the detail is associated with.
     func addDetail(_ description:String) {
         let context = PersistenceHandler.shared.container.viewContext
         let newDetail = Detail(context: context)
@@ -223,10 +246,12 @@ extension Place {
         saveData()
     }
     
-    // attempt to retrieve an image from a dictionary of cached images if it exists, if not download the image located
-    // at the stored url attribute and add it to the downloadImage dictioanry. if no URl is stored or an error occurs
-    // return a default image
-    
+    /// Function to fetch an image from a URL and store it into a local cache
+    ///
+    /// This function searches for an image associated with its imgurl attribute by looking up a local dictionary.
+    /// If it has no entry in the dictionary it attempts to download the image associated with its imgurl attribute at that URL.
+    /// If there is no URL string or it is an invalid URL a default image is displayed for use.
+    /// - Returns: a SwiftUI image to be displayed that represents its associated place.
     func getImage() async -> Image {
         guard let url = self.imgurl else {return defaultImage}
         if let image = downloadImage[url] {return image}
@@ -242,7 +267,8 @@ extension Place {
         
         return defaultImage
     }
-        // validates delta value and adds string retrieval
+
+    /// Validates a correct delta value of the delta attribute when set and displays a string representation with get
         var strDelta:String {
             get {
                 String(self.delta)
@@ -255,6 +281,8 @@ extension Place {
                 }
             }
         }
+    
+    /// Retrieves a default value with get if empty else retrieves or sets the name attribute.
     var strName:String {
         get {
             self.name ?? "no name"
@@ -264,8 +292,7 @@ extension Place {
         }
     }
     
-    //computed value to validate correct longitude entry
-    //gets a string representation of stored double
+    /// Get/Set method on the longitude attribute. Gets a formatted string value representing stored latitude and Sets a valid longitude value.
     var strLongitude: String {
         get {
             String(format: "%.5f", self.longitude)
@@ -279,8 +306,7 @@ extension Place {
         }
     }
     
-    //computed value to validate correct latitude entry
-    // gets a string representation of stored double value
+    /// Get/Set method on the latitude attribute. Gets a formatted string value represting stored latitude and Sets a valid latitude value.
     var strLatitude:String{
         get{
             String(format: "%.5f", self.latitude)
@@ -293,7 +319,8 @@ extension Place {
                 }
             }
         }
-    //computed value to fetch a string url from image or set url from string
+
+    /// Get/Set method on the imgurl attribute. Gets a string representation of the stored URL image and Safely unwraps a string converting it to a URL.
     var strUrl: String {
         get {
             self.imgurl?.absoluteString ?? ""
@@ -304,15 +331,20 @@ extension Place {
             }
         }
     
-    var timeZoneStr: String {
-        if let tz = self.timeZone{
-            return tz
-        }
-        fetchTimeZone()
-        return ""
-    }
+    /// Checks if there is a stored timezone value and displays it otherwise performs a timezone lookup based on stored coordinate values and assigns the attribute to the retrieved timezone.
+//    var timeZoneStr: String {
+//        if let tz = self.timeZone{
+//            return tz
+//        }
+//        fetchTimeZone()
+//        return ""
+//    }
     
     
+    /// Function to retrieve the time of sunrise and sunset of a location
+    ///
+    ///A callback function that performs a get request to a Sunrise and Sunset API website to retrieve information based on stored latitude and longitude values.
+    ///Decodes the  retrieved information into a storage struct to filter the values and then assigns the values to the associated place attributes.
     func fetchRiseSet() {
         let urlStr = "https://api.sunrisesunset.io/json?lat=\(self.latitude)&lng=\(self.longitude)"
         print("\(self.latitude) \(self.longitude)")
@@ -338,6 +370,10 @@ extension Place {
         }.resume()
     }
     
+    /// Function to retrieve the timezone of a location
+    ///
+    ///Callback function that first performs a get request to a web API that provides information about the timezone at the location of supplied coordinates.
+    ///Decodes the retrieved JSON file into a storage struct and then assigns the value to into the place object's associated attribute
     func fetchTimeZone() {
         let urlStr = "https://www.timeapi.io/api/TimeZone/coordinate?latitude=\(self.latitude)&longitude=\(self.longitude)"
         print("\(self.latitude) \(self.longitude)")
@@ -363,6 +399,13 @@ extension Place {
         }.resume()
     }
     
+    /// A function to convert a time in GMT format to a local time given a supplied timezone.
+    ///
+    ///This function uses a DateFormatter to convert input GMT+0 time string into the local time of the place it is associated with.
+    /// - Parameters:
+    ///   - gmt: A string representing the GMT+0 time of a place.
+    ///   - local: A string representing the local timezone of a place.
+    /// - Returns: A string representing the local time of a place.
     func timeGMTtoLocal(_ gmt: String, _ local: String) -> String{
         let inputFormatter = DateFormatter()
         inputFormatter.dateStyle = .none
@@ -380,21 +423,22 @@ extension Place {
         return "<unknown>"
         
     }
-    
-
 
 }
 
+/// A struct to store decoded values for sunrise and sunset
 struct SunriseSunset:Decodable {
     var sunrise: String
     var sunset: String
 }
 
+/// A struct to store the results of a get request to a sunrise sunset API
 struct SunriseSunsetAPIResults:Decodable {
     var results: SunriseSunset
     
 }
 
+/// A struct to store the decoded timezone from a get request to an API
 struct TimeZoneResults:Decodable {
     var timeZone: String
 }
@@ -402,7 +446,12 @@ struct TimeZoneResults:Decodable {
 
 		
 extension ContentView {
-    // deletes a place entity from collection8
+    /// Seletes a place entity from collection
+    ///
+    /// Deletes a place entity from a Place container created from the CoreData. It is executed after a swipe action provides the indexset of the place to be deleted.
+    /// Uses a map closure to access the index and perform a delete method.
+    /// Saves the context to persist the changes.
+    /// - Parameter index: An indexset of the place to be deleted acquired by performing a delete on this place during editmode of the view.
     func delPlace(index: IndexSet) {
         withAnimation {
             index.map{favouritePlaces[$0]}.forEach { place in
@@ -411,7 +460,7 @@ extension ContentView {
             saveData()
         }
     }
-    // adds an empty new place entity to a fetched place collection
+    /// A function to create a new place entity from the context and then save the data to persist changes.
     func addPlace() {
         let newPlace = Place(context: context)
         newPlace.strName = "New Place"
@@ -422,6 +471,10 @@ extension ContentView {
 }
 extension DetailView {
     // deletes a detail relationship from a place
+    /// A function to delete a detail from a place entity through its CoreData relationship.
+    /// Converts the set of details associated with a place to a workable array of detail objects and iterates through this array attempting to match the indexset supplied to the values in that array.
+    /// Deletes any matching values from the context and performs a save to persist changes.
+    /// - Parameter index: An indexset representing the items to be deleted from the details collection.
     func delDetail(index: IndexSet) {
         withAnimation {
             guard let detailsArray = Array(place.details ?? []) as? [Detail] else {
@@ -437,6 +490,7 @@ extension DetailView {
         }
     }
     
+
     var riseViewConverted : some View {
         HStack {
             Text("Sunrise:")
@@ -494,17 +548,22 @@ extension DetailView {
 }
 extension MapView {
     
-    // callback function updating the local long/lat parameters from an address
+    /// A function to perform the address lookup based on coordinates within the mapview. Accepts the callback function to update the local longitude and latitude values.
     func checkAddress(){
         mapModel.fromAddressToLocOld(updateViewCoord)
+    }
 //        Task{
 //            await mapModel.fromAddressToLoc()
 //            latitude = mapModel.latStr
 //            longitude = mapModel.longStr
 //        }
-    }
+//    }
         
-    // retrieves the address name of the associated coordinates and centres the map
+    /// Retrieves the address name of the associated coordinates and centres the map
+    ///
+    ///
+    /// A function that sets the attributes of the model to the latitude and longitude currently being observed by the user within the view. Updates the address of the view based on these coordinates
+    /// and pans the camera to the location.
     func checkLocation(){
         mapModel.longStr = longitude
         mapModel.latStr = latitude
@@ -513,7 +572,11 @@ extension MapView {
         
     }
     
-    // updates map as the mapview zooms in and out and sets the region
+    ///  Updates map as the mapview zooms in and out and sets the region
+    ///
+    ///  This function performs an update on the map model values after a zoom is performed using the view slider.
+    ///  It calls the checkmap() function to update the model and local location values and then performs the zoom scale adjustment
+    ///  on the map. Finally it checks the new address after map adjustment and centres the view more accurately over the coordinates.
     func checkZoom(){
         checkMap()
         mapModel.zoomToDelta(zoom)
@@ -521,8 +584,9 @@ extension MapView {
         mapModel.setRegion()
     }
     
-    // takes the current map view and assigns local coordinate parameters to
-    // the current orientation then finds the address of coordinates
+
+    /// Sets the models coordinate values to the current orientation on the map. Updates the local variables used for user interaction
+    ///  and then retrieves the address name of the location currently being viewed in that orientation.
     func checkMap(){
         mapModel.updateFromRegion()
         latitude = mapModel.latStr
@@ -530,7 +594,10 @@ extension MapView {
         mapModel.fromLocToAddress()
     }
     
-    //sets local coords based on model configuration
+    /// Sets local coords based on model configuration
+    ///
+    ///
+    /// Assigns the local latitude and longitude variables of the view to the currently stored values in the map model.
     func updateViewCoord() {
         latitude = mapModel.latStr
         longitude = mapModel.longStr

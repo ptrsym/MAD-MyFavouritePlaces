@@ -25,7 +25,6 @@ struct MapView: View {
                 Image(systemName: "magnifyingglass")
                     .onTapGesture {
                         if isEditMode?.wrappedValue == .active{
-                            //using callback method queue finding location coordinates based on address field
                            checkAddress()
                         }
                     }
