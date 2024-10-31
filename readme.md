@@ -2,6 +2,15 @@
 # MAD Assignment 2
 
 
+## Description
+
+This is a simple mobile application built learning Swift in Xcode.
+Features:
+- Make a simple checklist and update the entries.
+- Make and maintain a list of 'Favourite Places' using longitude and latitude.
+- Use a web API to view the current time at a Favourite Place.
+
+
 ## Milestone 1
 
 24/05/23 
